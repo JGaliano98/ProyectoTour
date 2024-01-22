@@ -21,6 +21,14 @@ class Valoraciones
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $comentario = null;
 
+    #[ORM\OneToOne(inversedBy: 'valoraciones', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?reserva $id_reserva = null;
+
+    #[ORM\ManyToOne(inversedBy: 'valoraciones')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?tour $id_tour = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -46,6 +54,30 @@ class Valoraciones
     public function setComentario(?string $comentario): static
     {
         $this->comentario = $comentario;
+
+        return $this;
+    }
+
+    public function getIdReserva(): ?reserva
+    {
+        return $this->id_reserva;
+    }
+
+    public function setIdReserva(reserva $id_reserva): static
+    {
+        $this->id_reserva = $id_reserva;
+
+        return $this;
+    }
+
+    public function getIdTour(): ?tour
+    {
+        return $this->id_tour;
+    }
+
+    public function setIdTour(?tour $id_tour): static
+    {
+        $this->id_tour = $id_tour;
 
         return $this;
     }

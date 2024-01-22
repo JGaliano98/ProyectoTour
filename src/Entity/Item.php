@@ -32,9 +32,21 @@ class Item
     #[ORM\ManyToMany(targetEntity: Ruta::class, mappedBy: 'ruta')]
     private Collection $rutas;
 
+    #[ORM\ManyToMany(targetEntity: Ruta::class, mappedBy: 'id_item')]
+    private Collection $P;
+
+    #[ORM\ManyToMany(targetEntity: ruta::class, inversedBy: 'items')]
+    private Collection $id_ruta;
+
+    #[ORM\ManyToMany(targetEntity: Ruta::class, mappedBy: 'id_item')]
+    private Collection $Rutas;
+
     public function __construct()
     {
         $this->rutas = new ArrayCollection();
+        $this->P = new ArrayCollection();
+        $this->id_ruta = new ArrayCollection();
+        $this->Rutas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -113,6 +125,57 @@ class Item
         if ($this->rutas->removeElement($ruta)) {
             $ruta->removeRutum($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Ruta>
+     */
+    public function getP(): Collection
+    {
+        return $this->P;
+    }
+
+    public function addP(Ruta $p): static
+    {
+        if (!$this->P->contains($p)) {
+            $this->P->add($p);
+            $p->addIdItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeP(Ruta $p): static
+    {
+        if ($this->P->removeElement($p)) {
+            $p->removeIdItem($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ruta>
+     */
+    public function getIdRuta(): Collection
+    {
+        return $this->id_ruta;
+    }
+
+    public function addIdRutum(ruta $idRutum): static
+    {
+        if (!$this->id_ruta->contains($idRutum)) {
+            $this->id_ruta->add($idRutum);
+        }
+
+        return $this;
+    }
+
+    public function removeIdRutum(ruta $idRutum): static
+    {
+        $this->id_ruta->removeElement($idRutum);
 
         return $this;
     }

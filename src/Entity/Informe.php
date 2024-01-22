@@ -25,6 +25,10 @@ class Informe
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imagen = null;
 
+    #[ORM\OneToOne(inversedBy: 'informe', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?tour $id_tour = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,6 +66,18 @@ class Informe
     public function setImagen(?string $imagen): static
     {
         $this->imagen = $imagen;
+
+        return $this;
+    }
+
+    public function getIdTour(): ?tour
+    {
+        return $this->id_tour;
+    }
+
+    public function setIdTour(tour $id_tour): static
+    {
+        $this->id_tour = $id_tour;
 
         return $this;
     }
