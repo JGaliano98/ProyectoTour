@@ -22,7 +22,7 @@ class Localidad
 
     #[ORM\ManyToOne(inversedBy: 'localidads')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?provincia $id_provincia = null;
+    private ?Provincia $id_provincia = null;
 
     #[ORM\OneToMany(mappedBy: 'id_localidad', targetEntity: Ruta::class, orphanRemoval: true)]
     private Collection $rutas;
@@ -49,12 +49,12 @@ class Localidad
         return $this;
     }
 
-    public function getIdProvincia(): ?provincia
+    public function getIdProvincia(): ?Provincia
     {
         return $this->id_provincia;
     }
 
-    public function setIdProvincia(?provincia $id_provincia): static
+    public function setIdProvincia(?Provincia $id_provincia): static
     {
         $this->id_provincia = $id_provincia;
 
